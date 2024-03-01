@@ -1,4 +1,4 @@
-import type { ImageProps, ImageSourcePropType } from 'react-native';
+import type { ViewProps } from 'react-native';
 import type {
   GestureStateChangeEvent,
   PanGestureHandlerEventPayload,
@@ -43,12 +43,7 @@ export type OnResetAnimationEndCallback = (
   >
 ) => void;
 
-export type ImageZoomProps = Omit<ImageProps, 'source'> & {
-  /**
-   * The image's URI, which can be overridden by the `source` prop.
-   * @default ''
-   */
-  uri?: string;
+export type ImageZoomProps = Pick<ViewProps, 'onLayout' | 'style'> & {
   /**
    * The minimum scale allowed for zooming.
    * @default 1
@@ -111,10 +106,10 @@ export type ImageZoomProps = Omit<ImageProps, 'source'> & {
    * @see https://facebook.github.io/react-native/docs/image.html#source
    * @default undefined
    */
-  source?: ImageSourcePropType;
+  children?: React.ReactNode;
 };
 
-export type ImageZoomUseLayoutProps = Pick<ImageZoomProps, 'onLayout'>;
+export type ImageZoomUseLayoutProps = Pick<ViewProps, 'onLayout'>;
 
 export type ImageZoomLayoutState = {
   /**

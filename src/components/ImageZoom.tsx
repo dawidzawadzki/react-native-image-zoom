@@ -9,13 +9,12 @@ import { useImageLayout } from '../hooks/useImageLayout';
 import type { ImageZoomProps } from '../types';
 
 const styles = StyleSheet.create({
-  image: {
+  imageContainer: {
     flex: 1,
   },
 });
 
 const ImageZoom: React.FC<ImageZoomProps> = ({
-  uri = '',
   minScale,
   maxScale,
   minPanPointers,
@@ -29,9 +28,9 @@ const ImageZoom: React.FC<ImageZoomProps> = ({
   onPanStart,
   onPanEnd,
   onResetAnimationEnd,
+  children,
   onLayout,
   style = {},
-  ...props
 }) => {
   const { center, onImageLayout } = useImageLayout({ onLayout });
   const { animatedStyle, gestures } = useGestures({
@@ -53,13 +52,12 @@ const ImageZoom: React.FC<ImageZoomProps> = ({
 
   return (
     <GestureDetector gesture={gestures}>
-      <Animated.Image
-        style={[styles.image, style, animatedStyle]}
-        source={{ uri }}
-        resizeMode="contain"
+      <Animated.View
         onLayout={onImageLayout}
-        {...props}
-      />
+        style={[styles.imageContainer, style, animatedStyle]}
+      >
+        {children}
+      </Animated.View>
     </GestureDetector>
   );
 };

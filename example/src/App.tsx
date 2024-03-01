@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, View, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Button, Image } from 'react-native';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import { ImageZoom } from '../../src';
 
@@ -7,8 +7,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  image: {
+  imageContainer: {
     overflow: 'hidden',
+  },
+  image: {
+    flex: 1,
   },
   buttonContainer: {
     zIndex: 10,
@@ -39,7 +42,6 @@ function App() {
   return (
     <SafeAreaView style={styles.container}>
       <ImageZoom
-        uri={imageUri}
         minScale={0.5}
         minPanPointers={2}
         onInteractionStart={() => {
@@ -51,12 +53,17 @@ function App() {
         onPanEnd={() => console.log('onPanEnd')}
         onPinchStart={() => console.log('onPinchStart')}
         onPinchEnd={() => console.log('onPinchEnd')}
-        style={styles.image}
+        style={styles.imageContainer}
         onResetAnimationEnd={(finished) => {
           onAnimationEnd(finished);
         }}
-        resizeMode="cover"
-      />
+      >
+        <Image
+          style={styles.image}
+          resizeMode="cover"
+          source={{ uri: imageUri }}
+        />
+      </ImageZoom>
       {isVisible && (
         <View style={styles.buttonContainer}>
           <Button title="BUTTON" />
